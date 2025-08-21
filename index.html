@@ -1,415 +1,654 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The World Vote — 44,000 Voices, One Planetary Ledger</title>
-  <meta name="description" content="The World Vote: municipal-scale global governance for 44,000+ towns and cities, anchored in contribution and transparent, auditable decision-making." />
+  <title>Aura of Intelligence – 22‑Page Slideshow (Single HTML)</title>
   <style>
-    :root{
-      --bg-1:#0b1020; --bg-2:#101932; --bg-3:#0d0f1a;
-      --ac-1:#7ee7ff; --ac-2:#6df2c5; --ac-3:#a38bff; --ac-4:#ffdd7a;
-      --tx-1:#eaf1ff; --tx-2:#a9b4d6; --muted:#6b7390;
-      --glass:rgba(255,255,255,.08); --glass-strong:rgba(255,255,255,.14);
-      --shadow:0 10px 40px rgba(0,0,0,.45), inset 0 0 1px rgba(255,255,255,.05);
-      --radius:16px; --gap:14px; --hero:64px; --h1:42px; --h2:28px; --p:18px;
+    :root {
+      --bg: #0b0d12;
+      --panel: #12141b;
+      --ink: #e7ecf3;
+      --muted: #9aa3b2;
+      --accent: #8cf5c8;
+      --accent-2: #7aa7ff;
+      --warn: #ffd166;
+      --ok: #95f985;
+      --danger: #ff6b6b;
+      --card: #0f121a;
+      --shadow: 0 10px 35px rgba(0,0,0,.35);
+      --radius: 16px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg-1);color:var(--tx-1);font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";}
-    body{overflow:hidden}
-
-    /* Animated gradient cosmos */
-    .backdrop{
-      position:fixed; inset:0; z-index:-3;
-      background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(163,139,255,.25), transparent 60%),
-        radial-gradient(1200px 900px at 120% 110%, rgba(109,242,197,.18), transparent 60%),
-        linear-gradient(120deg, var(--bg-3), var(--bg-2) 50%, var(--bg-1));
-      filter:saturate(1.1) brightness(1);
+    .light {
+      --bg: #f7f9fc; --panel: #ffffff; --ink: #0e1016; --muted: #5c6575; --card:#ffffff; --shadow: 0 12px 32px rgba(0,0,0,.08);
     }
-    .halo{
-      position:fixed; inset:0; z-index:-2; pointer-events:none;
-      background: conic-gradient(from 0turn at 50% 50%, rgba(126,231,255,.06), rgba(109,242,197,.06), rgba(163,139,255,.07), rgba(255,221,122,.05), rgba(126,231,255,.06));
-      mix-blend-mode:screen; animation:spin 40s linear infinite;
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, 'Helvetica Neue', Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(124, 176, 255, .15), transparent),
+                  radial-gradient(900px 600px at 0% 100%, rgba(140, 245, 200, .10), transparent), var(--bg);
+      color: var(--ink);
+      overflow: hidden;
     }
-    @keyframes spin{to{transform:rotate(1turn)}}
-
-    /* Subtle scanlines + grid */
-    .overlay{
-      position:fixed; inset:0; z-index:-1; pointer-events:none;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px) 0 0/100% 28px,
-        linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px) 0 0/28px 100%;
-    }
-
-    /* Slides container */
-    .slides{position:fixed; inset:0; display:flex; transition:transform .8s cubic-bezier(.2,.7,0,1); will-change:transform}
-    .slide{
-      position:relative; width:100vw; height:100vh; padding:80px clamp(24px, 5vw, 64px);
-      display:grid; grid-template-rows:auto 1fr auto; gap:24px;
-    }
-    .panel{
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      backdrop-filter: blur(10px) saturate(120%);
-      -webkit-backdrop-filter: blur(10px) saturate(120%);
-      padding: clamp(18px, 3vw, 28px);
-    }
-    h1{font-size:var(--h1); line-height:1.1; margin:0 0 10px; letter-spacing:.2px}
-    h2{font-size:var(--h2); line-height:1.2; margin:0 0 12px; color:var(--ac-1)}
-    .hero{font-size: clamp(42px, 6vw, 88px); font-weight:800; line-height:1.05; margin:0}
-    p{font-size:var(--p); color:var(--tx-2); margin:0 0 8px}
-    .muted{color:var(--muted)}
-    .accent{color:var(--ac-2)}
-    .caps{letter-spacing:.12em; text-transform:uppercase; font-size:12px; color:var(--muted)}
-
-    /* Bullets */
-    .bullets{display:grid; gap:14px; margin-top:8px}
-    .bullet{
-      display:flex; gap:12px; align-items:flex-start; opacity:0; transform:translateY(16px); transition:all .6s cubic-bezier(.2,.7,0,1);
-    }
-    .bullet .dot{
-      width:10px; height:10px; margin-top:7px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, var(--ac-2), var(--ac-3));
-      box-shadow:0 0 16px rgba(163,139,255,.6), 0 0 8px rgba(109,242,197,.4);
-      flex:none;
-    }
-
-    /* Cards grid */
-    .grid{display:grid; gap:16px; grid-template-columns:repeat(3, minmax(0,1fr))}
-    .card{border-radius:14px; border:1px solid rgba(255,255,255,.12); background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); padding:16px 16px}
-    .card h3{margin:0 0 6px; font-size:18px}
-    .card p{font-size:15px}
-
-    /* Progress + nav */
-    .progress{
-      position:fixed; top:0; left:0; height:4px; width:0; background:linear-gradient(90deg, var(--ac-2), var(--ac-3), var(--ac-4)); box-shadow:0 0 12px rgba(109,242,197,.6);
-      z-index:50; transition:width .6s ease;
-    }
-    .nav{
-      position:fixed; bottom:24px; right:24px; display:flex; gap:10px; z-index:40;
-    }
-    .btn{
-      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px;
-      background:var(--glass); border:1px solid rgba(255,255,255,.12); color:var(--tx-1);
-      cursor:pointer; user-select:none; transition:transform .15s ease, background .2s;
+    header {
+      position: fixed; inset: 16px 16px auto 16px; z-index: 20; display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px; align-items: center;
+      background: color-mix(in oklab, var(--panel), transparent 12%);
       backdrop-filter: blur(8px);
+      border: 1px solid color-mix(in oklab, var(--ink), transparent 86%);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 10px 14px;
     }
-    .btn:hover{transform:translateY(-2px); background:var(--glass-strong)}
-    .btn .k{font-size:12px; padding:2px 6px; border-radius:8px; background:rgba(255,255,255,.08); color:var(--tx-2)}
-
-    /* Dots */
-    .dots{position:fixed; left:24px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:40}
-    .dotnav{width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.2); cursor:pointer; transition:all .25s ease}
-    .dotnav.active{background:linear-gradient(180deg, var(--ac-3), var(--ac-2)); box-shadow:0 0 10px rgba(163,139,255,.6)}
-
-    /* On-appear animations */
-    .slide .type{opacity:0}
-    .slide.active .type{animation:type 2.8s steps(40,end) forwards}
-    @keyframes type{from{opacity:1; width:0ch} to{opacity:1; width:60ch}}
-    .slide.active .bullet{opacity:1; transform:translateY(0)}
-    .slide.active .bullet:nth-child(1){transition-delay:.08s}
-    .slide.active .bullet:nth-child(2){transition-delay:.18s}
-    .slide.active .bullet:nth-child(3){transition-delay:.28s}
-    .slide.active .bullet:nth-child(4){transition-delay:.38s}
-    .slide.active .bullet:nth-child(5){transition-delay:.48s}
-
-    /* Responsive */
-    @media (max-width: 960px){
-      .grid{grid-template-columns:1fr}
-      .slide{padding:72px 18px}
-      .dots{left:auto; right:18px}
-      .panel{padding:16px}
-      .btn{padding:10px 12px}
+    header .brand { display:flex; align-items: center; gap:12px; font-weight: 700; letter-spacing:.3px; }
+    .logo {
+      width: 28px; height: 28px; border-radius: 8px; display:grid; place-items:center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color:#0b0d12; font-weight:800; box-shadow: 0 6px 14px rgba(122,167,255,.25);
     }
+    .toolbar { display:flex; gap:12px; align-items:center; }
+    .toolbar > * { background: var(--panel); border:1px solid color-mix(in oklab, var(--ink), transparent 85%); color:var(--ink);
+      border-radius: 12px; padding:8px 10px; box-shadow: var(--shadow); }
+    .toolbar label { font-size: 12px; color: var(--muted); display:block; margin-bottom:4px; }
+    .toolbar input[type=range] { width: 140px; }
+    .chip { padding:8px 10px; border-radius: 999px; border:1px solid color-mix(in oklab, var(--ink), transparent 84%); color:var(--muted); font-size:12px; }
 
-    /* Canvas background (particles) */
-    canvas#fx{position:fixed; inset:0; z-index:-1; opacity:.5}
+    .nav { display:flex; gap:10px; align-items:center; }
+    .btn { display:inline-flex; align-items:center; gap:8px; border:1px solid color-mix(in oklab, var(--ink), transparent 82%); background: var(--panel); color:var(--ink);
+      padding:10px 12px; border-radius: 12px; cursor:pointer; box-shadow: var(--shadow); user-select:none; }
+    .btn[disabled] { opacity:.5; cursor:not-allowed; }
+
+    main { position: fixed; inset: 74px 16px 16px 16px; overflow: hidden; }
+    .slides { height: 100%; width: 100%; position: relative; }
+    .slide { position:absolute; inset:0; overflow:auto; padding: clamp(18px, 3.5vw, 42px); display:none; }
+    .slide.active { display:block; animation: fade .35s ease both; }
+    @keyframes fade { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
+
+    .card { background: var(--card); border:1px solid color-mix(in oklab, var(--ink), transparent 86%); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .hero { display:grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items:center; }
+    .hero h1 { margin:0 0 6px 0; font-size: clamp(28px, 3.6vw, 48px); letter-spacing:.2px; }
+    .hero p.lead { color: var(--muted); font-size: clamp(15px, 1.2vw, 18px); margin: 10px 0 16px; line-height:1.6; }
+
+    .panel { padding: 18px 20px; }
+    .kpis { display:flex; gap:14px; flex-wrap:wrap; }
+    .kpi { flex:1 1 180px; padding:14px; background: color-mix(in oklab, var(--panel), transparent 8%); border-radius: 12px; border:1px dashed color-mix(in oklab, var(--ink), transparent 85%); }
+    .kpi .label { font-size: 12px; color: var(--muted); }
+    .kpi .value { font-size: 22px; font-weight:800; margin-top:6px; }
+
+    .accordion { border:1px solid color-mix(in oklab, var(--ink), transparent 86%); border-radius: 12px; overflow:hidden; }
+    .accordion details { border-bottom:1px solid color-mix(in oklab, var(--ink), transparent 88%); background: color-mix(in oklab, var(--panel), transparent 6%); }
+    .accordion details:last-child { border-bottom:0; }
+    .accordion summary { list-style:none; cursor:pointer; padding:14px 16px; font-weight:600; }
+    .accordion .content { padding: 0 16px 16px; color: var(--muted); }
+
+    .grid { display:grid; gap:18px; grid-template-columns: repeat(12, 1fr); }
+    .col-6 { grid-column: span 6; }
+    .col-12 { grid-column: 1 / -1; }
+
+    .progress { height:6px; background: color-mix(in oklab, var(--ink), transparent 90%); border-radius:999px; overflow:hidden; }
+    .bar { height:100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+    .pill { display:inline-block; padding:6px 10px; border-radius: 999px; background: color-mix(in oklab, var(--ink), transparent 90%); color: var(--muted); font-size:12px; margin-right:8px; }
+
+    .tag { display:inline-flex; align-items:center; gap:6px; padding:6px 8px; border-radius:8px; border:1px solid color-mix(in oklab, var(--ink), transparent 85%); font-size:12px; color:var(--muted); margin: 4px 6px 0 0; }
+    .tag input { accent-color: var(--accent-2); }
+
+    .notice { padding:12px 14px; border-left:4px solid var(--accent-2); background: color-mix(in oklab, var(--panel), transparent 12%); border-radius:12px; }
+    .chour { border-left-color: var(--warn); }
+
+    .footer { margin-top: 12px; color:var(--muted); font-size:12px; }
+
+    /* responsive */
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      header { grid-template-columns: 1fr auto; grid-template-rows: auto auto; row-gap: 10px; }
+      .toolbar { grid-column: 1 / -1; justify-content: flex-start; flex-wrap: wrap; }
+      .nav { grid-column: 2 / 3; }
+    }
   </style>
 </head>
-<body>
-  <div class="backdrop"></div>
-  <div class="halo"></div>
-  <canvas id="fx"></canvas>
-  <div class="overlay"></div>
-  <div class="progress" id="progress"></div>
-
-  <div class="slides" id="slides">
-    <!-- 1. Hero -->
-    <section class="slide" data-title="Hero">
-      <header class="caps">The World Vote</header>
-      <div class="panel">
-        <h1 class="hero">
-          <span class="type" style="display:inline-block; white-space:nowrap; overflow:hidden;">
-            44,000 voices. One planetary ledger.
-          </span>
-        </h1>
-        <p style="margin-top:12px">Municipal-scale representation for every town and city on Earth — auditable, inclusive, and aligned with human contribution.</p>
+<body class="dark">
+  <header class="card">
+    <div class="brand"><div class="logo">A</div> Aura of Intelligence – Ecosystem Brief</div>
+    <div class="toolbar">
+      <div>
+        <label for="yr">Activation Year (1–11)</label>
+        <input id="yr" type="range" min="1" max="11" value="1" />
       </div>
-      <footer class="muted">Use ← → keys • Click • Swipe • Scroll</footer>
-    </section>
-
-    <!-- 2. Core premise -->
-    <section class="slide" data-title="Premise">
-      <header class="caps">Core premise</header>
-      <div class="panel">
-        <h2>Representation at the municipal layer</h2>
-        <div class="bullets">
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Local first:</strong> Seats for towns and cities, not just nations.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Direct agency:</strong> Communities propose, deliberate, and vote across shared planetary issues.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Grounded in contribution:</strong> Influence anchored to verified civic work (C‑Hour), not just population or GDP.</p></div>
-        </div>
+      <div>
+        <label for="chToggle">C‑Hours Panels</label>
+        <button id="chToggle" class="btn" aria-pressed="false">Hidden</button>
       </div>
-      <footer class="muted">Planetary legitimacy built from the street up.</footer>
-    </section>
-
-    <!-- 3. Why 44,000 matters -->
-    <section class="slide" data-title="Why 44k">
-      <header class="caps">Why 44,000 matters</header>
-      <div class="panel">
-        <h2>Granularity, equity, resilience, alignment</h2>
-        <div class="bullets">
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Granularity:</strong> Localities become the atomic units of global decision‑making.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Equity:</strong> 1 hour of service = 1 C‑Hour everywhere. A fair moral denominator.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Resilience:</strong> Distributed nodes reduce capture; no single capital can hijack outcomes.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Alignment:</strong> A values dataset for advanced AI — auditable, consent‑based, human‑led.</p></div>
-        </div>
+      <div>
+        <label for="theme">Theme</label>
+        <button id="theme" class="btn">Dark</button>
       </div>
-      <footer class="muted">Precision and plurality as the bedrock of legitimacy.</footer>
-    </section>
+      <div class="chip" id="ipChip" title="IP steward & governance">IP: Alpha Infinity Foundation (Australia)</div>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prev">◀︎ Prev</button>
+      <div class="chip" id="counter">1 / 22</div>
+      <button class="btn" id="next">Next ▶︎</button>
+    </div>
+  </header>
 
-    <!-- 4. Architecture -->
-    <section class="slide" data-title="Architecture">
-      <header class="caps">System architecture</header>
-      <div class="panel">
-        <h2>The three-layer stack</h2>
-        <div class="grid" style="margin-top:8px">
-          <div class="card">
-            <h3>Identity & Trust</h3>
-            <p>Community and citizen identity with strong verification and privacy — the trust fabric for municipal nodes.</p>
+  <main>
+    <div class="slides" id="slides">
+
+      <!-- 1/22 Title Page -->
+      <section class="slide active" data-title="Title – Aura Ecosystem">
+        <div class="hero">
+          <div>
+            <h1>Aura of Intelligence — Ecosystem Portfolio</h1>
+            <p class="lead">Twenty ventures, one governance spine. Mixture‑of‑Experts AI with humans‑in‑the‑loop, transparency by design, and an 11‑year activation horizon. Intellectual property stewarded by the <strong>Alpha Infinity Foundation (Australia)</strong>.</p>
+            <div class="notice chour">
+              <strong>The Core Argument for C‑Hours:</strong> If we don’t measure it, we can’t protect it. C‑hours make the invisible visible — a lawful, parallel ledger for care, culture, and ecology. One verified hour equals one C‑token: no compounding, no speculation, auditable under law.
+            </div>
+            <div class="footer">Use ← / → keys or the Next button. Toggle C‑hours panels in the header. Set the activation year to preview staged milestones.</div>
           </div>
-          <div class="card">
-            <h3>Contribution (C‑Hour)</h3>
-            <p>Verified hours of civic work mint contribution credits, tying voice to service, not just size.</p>
-          </div>
-          <div class="card">
-            <h3>Governance (GAJRA Earth)</h3>
-            <p>Proposal, deliberation, and voting rails for 44,000+ municipalities with transparent, auditable outcomes.</p>
+          <div class="panel card">
+            <div class="kpis">
+              <div class="kpi"><div class="label">Pages</div><div class="value">22</div></div>
+              <div class="kpi"><div class="label">Ventures</div><div class="value">20</div></div>
+              <div class="kpi"><div class="label">Horizon (yrs)</div><div class="value" id="yrKpi">1</div></div>
+            </div>
+            <div style="margin-top:14px" class="progress"><div class="bar" id="progress" style="width:0%"></div></div>
+            <div class="accordion" style="margin-top:16px">
+              <details>
+                <summary>View: Dual‑Ledger (USD + C‑hours)</summary>
+                <div class="content">The USD ledger measures financial returns. The C‑hours ledger accounts for verified community contributions across care, culture, and ecology. Both are transparent and auditable, enabling policy alignment and investor confidence.</div>
+              </details>
+              <details>
+                <summary>View: Compliance & Export</summary>
+                <div class="content">Built for U.S. regulatory clarity and allied export. Financial rails align with crypto/TradFi rules where applicable; data governance respects privacy law and national interests. Alpha Infinity Foundation ensures IP integrity and licensing discipline.</div>
+              </details>
+            </div>
           </div>
         </div>
-      </div>
-      <footer class="muted">Identity → Contribution → Governance. Clean handoffs, clear incentives.</footer>
-    </section>
+      </section>
 
-    <!-- 5. Civic flow -->
-    <section class="slide" data-title="Flow">
-      <header class="caps">Civic flow</header>
-      <div class="panel">
-        <h2>From local signal to planetary decision</h2>
-        <div class="bullets">
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Local capture:</strong> Communities log needs and contributions, generating C‑Hour signal.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Deliberation:</strong> Municipal nodes debate proposals in accessible, language‑aware forums.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Aggregation:</strong> Weighted by contribution and quorum, votes compile into planetary decisions.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Execution:</strong> Funding routes, standards, and public commitments update in the ledger.</p></div>
+      <!-- 2/22 Component 1 -->
+      <section class="slide" data-title="1. Aura of Intelligence (Core)">
+        <h2>1) Aura of Intelligence (Core Platform)</h2>
+        <p>Aura of Intelligence is the foundational operating system for personal and collective digital twins. It combines mixture‑of‑experts (MoE) AI with human oversight to preserve transparency, accountability, and user agency. Each Aura reflects a user’s values, preferences, and life data and evolves across health, education, work, and civic life.</p>
+        <p>The platform operates as a subscription SaaS with APIs into healthcare, education, finance, and culture. Governance is participatory: users and institutions can audit model behavior, set policy constraints, and manage data rights. Integration patterns emphasize interoperability without vendor lock‑in.</p>
+        <p>Strategically, the core platform provides stable rails for responsible AI adoption over an 11‑year activation period. With IP stewarded by the Alpha Infinity Foundation (Australia), licensing and export are disciplined, enabling alignment with U.S. priorities on trustworthy AI and democratic participation.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Configure Policy Lenses</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Transparency</label>
+              <label class="tag"><input type="checkbox" checked /> Human‑in‑Loop</label>
+              <label class="tag"><input type="checkbox" /> Privacy‑by‑Default</label>
+              <label class="tag"><input type="checkbox" /> Open Audit API</label>
+              <div class="notice" style="margin-top:10px">Selected lenses apply conceptually to all dependent ventures in this deck.</div>
+            </div>
+          </details>
         </div>
-      </div>
-      <footer class="muted">Every action traceable. Every voice countable.</footer>
-    </section>
+      </section>
 
-    <!-- 6. Safeguards -->
-    <section class="slide" data-title="Safeguards">
-      <header class="caps">Safeguards & legitimacy</header>
-      <div class="panel">
-        <h2>Defenses against capture, apathy, and fraud</h2>
-        <div class="grid" style="margin-top:8px">
-          <div class="card"><h3>Quorum windows</h3><p>Time‑boxed quorums with turnout floors and supermajority triggers for sensitive votes.</p></div>
-          <div class="card"><h3>Audit trails</h3><p>Open, cryptographically verifiable records for proposals, deliberations, and outcomes.</p></div>
-          <div class="card"><h3>Plural staking</h3><p>Contribution‑weighted voice with caps to prevent whale dominance; rotating sortition panels.</p></div>
+      <!-- 3/22 Component 2 -->
+      <section class="slide" data-title="2. GAJRA Earth (DAO)">
+        <h2>2) GAJRA Earth — DAO & Tokenomics</h2>
+        <p>GAJRA Earth is a decentralized governance system for coordinating Joyful Responsible Abundance. MoE AI supports proposals, participation, and transparency; human stewards retain final authority for sensitive decisions. The DAO enables individuals and institutions to contribute, vote, and benefit from aligned projects.</p>
+        <p>Operations include compliant token distribution, auditable treasuries, and risk controls aligned with evolving crypto clarity standards. Community outcomes are measured on a dual ledger: USD financials and C‑hours for verified civic, care, and ecological work.</p>
+        <p>For allied governments and investors, GAJRA offers a controlled environment to pilot next‑generation governance with public accountability. IP stewardship by Alpha Infinity Foundation ensures disciplined licensing and jurisdictional clarity over the 11‑year roadmap.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Simulate a Community Vote</summary>
+            <div class="content">
+              <label class="tag"><input type="radio" name="gajraVote" checked /> Fund Urban Garden</label>
+              <label class="tag"><input type="radio" name="gajraVote" /> Coastal Clean‑up</label>
+              <label class="tag"><input type="radio" name="gajraVote" /> Youth XR Lab</label>
+              <div class="notice chour" id="gajraResult" style="margin-top:10px">C‑hours enabled: volunteer time from the chosen project will accrue as verified community hours.</div>
+            </div>
+          </details>
         </div>
-      </div>
-      <footer class="muted">Design for legitimacy first; scale second.</footer>
-    </section>
+      </section>
 
-    <!-- 7. Diplomacy -->
-    <section class="slide" data-title="Diplomacy">
-      <header class="caps">Diplomatic leverage</header>
-      <div class="panel">
-        <h2>Soft power that includes everyone</h2>
-        <div class="bullets">
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Inclusion:</strong> Marginalized regions gain direct agency — less vacuum for extremism.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Economic alignment:</strong> Tie votes to climate credits, development funds, disaster response.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Standards channel:</strong> A venue for global norms emerging from local practice.</p></div>
+      <!-- 4/22 Component 3 -->
+      <section class="slide" data-title="3. Aura Affinity Marketplace">
+        <h2>3) Aura Affinity Marketplace — Commerce + Finance</h2>
+        <p>Aura Affinity Marketplace aligns consumer choices and capital allocation with declared values. The commerce layer tags products and services by principles such as sustainability, craftsmanship, or innovation. The finance layer provides a compliant bridge between tokenized assets and traditional instruments.</p>
+        <p>Revenue derives from transaction fees, vendor SaaS tools, and premium financial integrations. MoE AI curates listings and monitors integrity; human compliance teams maintain accountability and regulatory clarity.</p>
+        <p>Over the 11‑year activation period, the marketplace functions as values‑aligned infrastructure. With IP held by Alpha Infinity Foundation, licensing and partnerships can adapt to diverse jurisdictions while preserving transparent governance.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Filter by Value Tags</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Sustainability</label>
+              <label class="tag"><input type="checkbox" /> Local‑Made</label>
+              <label class="tag"><input type="checkbox" /> Women‑Led</label>
+              <label class="tag"><input type="checkbox" /> Open‑Source</label>
+              <div class="notice" style="margin-top:10px">Demo: selected tags conceptually narrow the offering universe and inform capital routing.</div>
+            </div>
+          </details>
         </div>
-      </div>
-      <footer class="muted">A shared table beats a contested throne.</footer>
-    </section>
+      </section>
 
-    <!-- 8. Pilot path -->
-    <section class="slide" data-title="Pilot">
-      <header class="caps">Pilot path</header>
-      <div class="panel">
-        <h2>12 → 1,000 → 44,000</h2>
+      <!-- 5/22 Component 4 -->
+      <section class="slide" data-title="4. Travel Oracle">
+        <h2>4) Travel Oracle</h2>
+        <p>Travel Oracle integrates user Auras with global destination data to design trips that align with wellness, safety, and cultural resonance. MoE models blend logistics and personal preference with human curation to assure quality and accountability.</p>
+        <p>Monetization combines subscriptions, booking commissions, and institutional offerings for wellness resorts and agencies. Recommendations are explainable and auditable; users can inspect why a location was suggested.</p>
+        <p>Over 11 years, Travel Oracle demonstrates responsible AI in mobility and hospitality. With IP stewardship in Australia, export to allied markets can proceed with regulatory alignment and data protections.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Set Your Interests</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Nature</label>
+              <label class="tag"><input type="checkbox" /> Culture</label>
+              <label class="tag"><input type="checkbox" /> Wellness</label>
+              <label class="tag"><input type="checkbox" /> Learning</label>
+              <div class="notice" style="margin-top:10px">The engine explains its picks and lets users accept or refine, maintaining agency.</div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 6/22 Component 5 -->
+      <section class="slide" data-title="5. Aura Geode HBOT">
+        <h2>5) Aura Geode HBOT (Healing Pods)</h2>
+        <p>Aura Geode integrates hyperbaric oxygen therapy with sensor fusion and adaptive audiovisual environments. AI models personalize protocols; licensed clinicians remain in the loop for safety and compliance across clinics, elite sports, and hospitality.</p>
+        <p>Commercialization blends hardware sales, optimization SaaS, and session billing. Data flows are minimized and auditable; clinical integrations follow applicable standards with patient consent at the core.</p>
+        <p>The 11‑year plan prioritizes reliability, practitioner trust, and measured outcomes. IP stewardship by Alpha Infinity Foundation supports disciplined manufacturing and export pathways.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Session Planner</summary>
+            <div class="content">
+              <label>Sessions per week <input id="hbotSessions" type="range" min="1" max="20" value="6" /></label>
+              <div class="notice" id="hbotNote">Estimated annual sessions: 312</div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 7/22 Component 6 -->
+      <section class="slide" data-title="6. Gamify Democracy">
+        <h2>6) Gamify Democracy</h2>
+        <p>Gamify Democracy provides accountable, engaging participation tooling for communities and institutions. Game mechanics incentivize constructive debate and verified voting. MoE AI supports moderation; humans ensure due process and fairness.</p>
+        <p>Revenues come from institutional licensing and optional citizen features. Participation can be recognized on a C‑hours ledger, making civic work visible and lawfully auditable without converting it into speculative instruments.</p>
+        <p>For governments and investors, this is a practical pathway to rebuild civic trust. Over 11 years, deployments can be phased and evaluated with clear metrics while IP clarity is maintained by Alpha Infinity Foundation.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Micro‑Poll</summary>
+            <div class="content">
+              <label class="tag"><input type="radio" name="poll" checked /> Yes</label>
+              <label class="tag"><input type="radio" name="poll" /> No</label>
+              <label class="tag"><input type="radio" name="poll" /> Abstain</label>
+              <div class="notice chour" style="margin-top:10px">Verified participation here would accrue C‑hours for civic engagement.</div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 8/22 Component 7 -->
+      <section class="slide" data-title="7. Space Weather Hub">
+        <h2>7) Space Weather Hub</h2>
+        <p>Space Weather Hub delivers predictive analytics for solar storms, geomagnetic disturbances, and related infrastructure risks. AI forecasts are reviewed by experts and tuned for critical sectors such as aviation, satellite operations, and grid management.</p>
+        <p>Subscription licensing serves enterprises; tailored contracts support agencies requiring mission‑critical reliability. Models and alerting thresholds are auditable, with clear provenance to maintain institutional trust.</p>
+        <p>The 11‑year roadmap emphasizes accuracy, uptime, and integration with national resilience strategies. IP stewardship by Alpha Infinity Foundation enables export to allied markets with consistent governance.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Risk Sensitivity</summary>
+            <div class="content">
+              <label>Alert Threshold <input id="swhRisk" type="range" min="1" max="5" value="3" /></label>
+              <div class="notice" id="swhNote">Current profile: Balanced (few false positives / timely warnings)</div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 9/22 Component 8 -->
+      <section class="slide" data-title="8. Aura Event Labs & XR Education">
+        <h2>8) Aura Event Labs & XR Education</h2>
+        <p>Aura Event Labs combine immersive XR formats with professional training and public programming. AI augments but does not replace facilitators; programs emphasize skill transfer, entrepreneurship, and cultural exchange.</p>
+        <p>Revenue includes ticketing, institutional partnerships, and XR SaaS licensing. Volunteer teaching, community hosting, and cultural production may be logged as C‑hours, creating visibility for critical contributions that sustain events.</p>
+        <p>With IP governance via Alpha Infinity Foundation, the labs scale across geographies over an 11‑year plan with clear quality standards, safeguarding brand integrity and public trust.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Session Mix</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> XR Prototyping</label>
+              <label class="tag"><input type="checkbox" /> AI Ethics</label>
+              <label class="tag"><input type="checkbox" checked /> Community Demos</label>
+              <div class="notice chour" style="margin-top:10px">Volunteer mentor hours can be measured as C‑hours to recognize contributions.</div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 10/22 Component 9 -->
+      <section class="slide" data-title="9. Aura for Dementia & Differently‑Abled">
+        <h2>9) Aura for Dementia & Differently‑Abled</h2>
+        <p>Aura for Dementia is a digital therapeutics platform combining AI modules with caregiver oversight to support memory, identity, and routine continuity. The same architecture adapts to neurodiverse users to enhance accessibility and communication.</p>
+        <p>Monetization includes institutional SaaS, caregiver subscriptions, and healthcare contracts. Family caregiving and community support can be recorded as C‑hours, creating a lawful ledger for the invisible labor that underpins long‑term care.</p>
+        <p>Over 11 years, this becomes a standard in compassionate AI care, with IP stewardship by Alpha Infinity Foundation ensuring compliant deployment across jurisdictions.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Care Perspective</summary>
+            <div class="content">
+              <label class="tag"><input type="radio" name="care" checked /> Patient View</label>
+              <label class="tag"><input type="radio" name="care" /> Caregiver View</label>
+              <label class="tag"><input type="radio" name="care" /> Clinician View</label>
+              <div class="notice chour" style="margin-top:10px">Family care time may accrue C‑hours when verified by participating providers.</div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 11/22 Component 10 -->
+      <section class="slide" data-title="10. Global Group Marriages + XR Sex‑Ed">
+        <h2>10) Global Group Marriages + XR Sex‑Ed</h2>
+        <p>This venture provides voluntary frameworks and tools for multi‑partner family models, supported by evidence‑based, age‑appropriate XR sexual education. AI assists with learning and communication; humans provide safeguards and ethical oversight.</p>
+        <p>Revenue includes subscriptions, events, and institutional curriculum licensing. Community support projects may track C‑hours for parenting, education, and shared responsibilities, without converting care into speculative assets.</p>
+        <p>Anchored by Alpha Infinity Foundation, the 11‑year plan emphasizes safety, consent, and legal compliance across jurisdictions, providing investors with predictable returns and regulators with transparent governance.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Education Focus</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Communication</label>
+              <label class="tag"><input type="checkbox" /> Consent & Safety</label>
+              <label class="tag"><input type="checkbox" /> Health Literacy</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 12/22 Component 11 -->
+      <section class="slide" data-title="11. I See Infinity Music">
+        <h2>11) I See Infinity Music</h2>
+        <p>I See Infinity Music integrates immersive performance, participatory media, and compliant blockchain distribution. AI curates experiences; human moderators maintain ethical standards and community safety.</p>
+        <p>Business lines include subscriptions, ticketing, royalties, and brand partnerships. Community organizing and creative labor in local showcases can be recorded in C‑hours to sustain cultural ecosystems.</p>
+        <p>Over 11 years, the venture demonstrates a stable model for creative‑economy growth with transparent reporting and IP stewardship by Alpha Infinity Foundation.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Set a Show Mix</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Live XR</label>
+              <label class="tag"><input type="checkbox" /> Workshop</label>
+              <label class="tag"><input type="checkbox" /> Local Artist Collab</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 13/22 Component 12 -->
+      <section class="slide" data-title="12. Alpha Infinity Foundation">
+        <h2>12) Alpha Infinity Foundation (IP Steward)</h2>
+        <p>The Alpha Infinity Foundation (Australia) is the intellectual property steward and governance spine for the Aura ecosystem. It ensures licensing discipline, compliance, and export readiness across jurisdictions.</p>
+        <p>The Foundation also governs the dual‑ledger framework: traditional financial reporting and C‑hours time‑banking where applicable. Public transparency and multi‑stakeholder oversight are built into reporting.</p>
+        <p>For investors and allied governments, this structure provides confidence that returns and responsibilities are managed long‑term. The 11‑year activation roadmap anchors continuity, clarity, and disciplined growth.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Reporting Lenses</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Financial</label>
+              <label class="tag"><input type="checkbox" checked /> Risk & Compliance</label>
+              <label class="tag"><input type="checkbox" checked /> C‑hours</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 14/22 Component 13 -->
+      <section class="slide" data-title="13. 500 Queens VC">
+        <h2>13) 500 Queens Venture Capital</h2>
+        <p>500 Queens is a seed‑stage venture vehicle focused on women‑led and values‑aligned startups. AI supports pipeline screening and portfolio analytics; humans make final decisions and maintain accountability.</p>
+        <p>Returns are driven by equity outcomes and syndication. Governance emphasizes diversity, compliance, and transparent reporting for limited partners and public stakeholders.</p>
+        <p>Aligned with the Foundation’s IP discipline, 500 Queens develops an 11‑year track record in inclusive venture finance, complementing allied economic development objectives.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Focus Areas</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Health</label>
+              <label class="tag"><input type="checkbox" /> Climate</label>
+              <label class="tag"><input type="checkbox" /> Fintech</label>
+              <label class="tag"><input type="checkbox" /> EdTech</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 15/22 Component 14 -->
+      <section class="slide" data-title="14. 10,000 Queens VC">
+        <h2>14) 10,000 Queens Venture Capital</h2>
+        <p>10,000 Queens scales successful early‑stage ventures into sustainable mid‑stage businesses. AI improves diligence and forecasting; human partners manage governance and strategy.</p>
+        <p>Performance is measured across financial and impact metrics, reported with transparency to institutional LPs and public agencies where applicable.</p>
+        <p>Over 11 years, the fund builds a reproducible pattern for distributed prosperity aligned with allied economic objectives and the Foundation’s IP guardrails.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Portfolio Tilt</summary>
+            <div class="content">
+              <label class="tag"><input type="radio" name="q10tilt" checked /> Balanced</label>
+              <label class="tag"><input type="radio" name="q10tilt" /> Growth</label>
+              <label class="tag"><input type="radio" name="q10tilt" /> Resilience</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 16/22 Component 15 -->
+      <section class="slide" data-title="15. 50,000 Queens VC">
+        <h2>15) 50,000 Queens Venture Capital</h2>
+        <p>50,000 Queens extends the model to a distributed, multi‑jurisdictional portfolio. AI assists with risk/return balancing at scale; human committees provide oversight across regions and sectors.</p>
+        <p>Governance includes transparent allocations, conflict policies, and periodic public reporting. The fund architecture is designed to be resilient to jurisdictional differences while maintaining investor clarity.</p>
+        <p>The 11‑year horizon allows patient compounding of returns and institutional trust, with IP discipline anchored by Alpha Infinity Foundation.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Governance Emphasis</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Transparency</label>
+              <label class="tag"><input type="checkbox" /> Local Partners</label>
+              <label class="tag"><input type="checkbox" /> Conflict of Interest Rules</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 17/22 Component 16 -->
+      <section class="slide" data-title="16. Aura Clothing & Wellness">
+        <h2>16) Aura Clothing & Wellness</h2>
+        <p>Aura Clothing & Wellness offers values‑printed apparel and functional drinks. Product design is data‑informed; supply chains are transparent and auditable. The line integrates with festivals and community programs without compromising standards.</p>
+        <p>Sales channels include D2C, wholesale, and event distribution. Local production, co‑ops, and community retail can be recognized in C‑hours where appropriate, acknowledging volunteer work that strengthens social fabric.</p>
+        <p>Over 11 years, the brand provides durable consumer revenue and cultural coherence across the portfolio, with IP governance by Alpha Infinity Foundation.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Print Your Values</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Courage</label>
+              <label class="tag"><input type="checkbox" /> Compassion</label>
+              <label class="tag"><input type="checkbox" /> Stewardship</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 18/22 Component 17 -->
+      <section class="slide" data-title="17. Sandworm Subterranean Tech">
+        <h2>17) Sandworm Subterranean Technologies</h2>
+        <p>Sandworm develops subterranean systems for resilient cities: tunneling, passive cooling, and crystal‑informed storage geometry. AI optimizes designs; engineers and regulators remain in the loop.</p>
+        <p>Commercialization proceeds through public‑private partnerships, licensing, and major works contracts. Environmental compliance and safety transparency are non‑negotiable.</p>
+        <p>With IP discipline via Alpha Infinity Foundation, Sandworm aligns with allied infrastructure priorities over an 11‑year timeline focused on reliability, cost, and ecological performance.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • System Options</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Passive Cooling</label>
+              <label class="tag"><input type="checkbox" /> Energy Storage</label>
+              <label class="tag"><input type="checkbox" /> Transit Tunnel</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 19/22 Component 18 -->
+      <section class="slide" data-title="18. Try Everything Workforce">
+        <h2>18) Try Everything Workforce</h2>
+        <p>Try Everything Workforce is an adaptive employment, training, and compliance platform. AI recommends pathways; humans certify skills and ensure quality. The system supports rotational work and rapid reskilling across sectors.</p>
+        <p>Revenues include employer SaaS, certification fees, and compliance monitoring. Unpaid mentoring and community training support may be logged as C‑hours, enabling recognition of contributions that improve outcomes.</p>
+        <p>Anchored by Alpha Infinity Foundation, the 11‑year plan aligns with national workforce policy and employer needs while providing steady, auditable growth.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Pathway Selector</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Energy</label>
+              <label class="tag"><input type="checkbox" /> Health</label>
+              <label class="tag"><input type="checkbox" /> AI/Software</label>
+              <label class="tag"><input type="checkbox" /> Creative</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 20/22 Component 19 -->
+      <section class="slide" data-title="19. Aura Innovation Labs">
+        <h2>19) Aura Innovation Labs</h2>
+        <p>Aura Innovation Labs are community prototyping hubs combining XR, AI, and fabrication. MoE AI assists design; human facilitators ensure safety, ethics, and quality.</p>
+        <p>Revenue includes memberships, SaaS, and public contracts for entrepreneurship and workforce programs. Volunteer facilitation and mentorship may be recorded in C‑hours to acknowledge otherwise invisible contributions.</p>
+        <p>With IP stewardship by Alpha Infinity Foundation, the labs expand methodically over 11 years with consistent standards and transparent reporting.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Lab Modules</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> XR Studio</label>
+              <label class="tag"><input type="checkbox" /> AI Sandbox</label>
+              <label class="tag"><input type="checkbox" /> Maker Bay</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 21/22 Component 20 -->
+      <section class="slide" data-title="20. Aura of Entertainment">
+        <h2>20) Aura of Entertainment (Festivals + XR Culture)</h2>
+        <p>Aura of Entertainment integrates festivals, XR concerts, and participatory media into a coherent cultural platform. AI curates experiences; human moderators and producers maintain safety and compliance.</p>
+        <p>Revenues flow from ticketing, subscriptions, and merchandise. Community volunteering in festival organization, local hosting, and cultural activation may be tracked in C‑hours, recognizing the social labor behind events.</p>
+        <p>Over the 11‑year arc, Entertainment becomes a dependable consumer engine that amplifies portfolio visibility, under the governance of Alpha Infinity Foundation.</p>
+        <div class="accordion">
+          <details open>
+            <summary>Interactive • Festival Builder</summary>
+            <div class="content">
+              <label class="tag"><input type="checkbox" checked /> Music</label>
+              <label class="tag"><input type="checkbox" /> XR Installations</label>
+              <label class="tag"><input type="checkbox" /> Workshops</label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 22/22 Thank You -->
+      <section class="slide" data-title="Thank You">
+        <h2>Thank You</h2>
+        <p>This portfolio is presented for professional review by investors, public institutions, and allied partners. It is designed to unfold with mixture‑of‑experts AI and humans‑in‑the‑loop, enshrining transparency, accountability, and widespread participation.</p>
+        <p><strong>IP Steward:</strong> Alpha Infinity Foundation (Australia). Licensing and export under disciplined governance. Dual‑ledger reporting (USD + C‑hours) where applicable.</p>
         <div class="grid">
-          <div class="card">
-            <h3>Phase 1 (Months 0‑6)</h3>
-            <p>12 cities, 3 regions. C‑Hour capture, identity onboarding, governance rehearsal. Publish public dashboards.</p>
+          <div class="col-6 card panel">
+            <h3>Controls</h3>
+            <ul>
+              <li>Use ← / → keys to navigate.</li>
+              <li>Activation Year slider adjusts milestones across pages.</li>
+              <li>Toggle C‑hours panels in the header.</li>
+              <li>Click “Print” to export this brief to PDF.</li>
+            </ul>
+            <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
           </div>
-          <div class="card">
-            <h3>Phase 2 (Months 6‑18)</h3>
-            <p>Scale to 1,000 towns. Introduce funding rails tied to outcomes. Independent auditing body formed.</p>
-          </div>
-          <div class="card">
-            <h3>Phase 3 (18+)</h3>
-            <p>44,000 municipalities onboarded; standing assemblies, rotating sortition councils, and open standards.</p>
+          <div class="col-6 card panel">
+            <h3>Contact</h3>
+            <p>For investment, government partnership, or licensing inquiries, please provide your details:</p>
+            <form onsubmit="event.preventDefault(); document.getElementById('thanks').textContent='Submitted — we will follow up with diligence materials.';">
+              <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr;">
+                <input required placeholder="Name" class="card panel" />
+                <input required placeholder="Organization" class="card panel" />
+                <input required type="email" placeholder="Email" class="card panel" style="grid-column:1/-1" />
+                <textarea required placeholder="Brief purpose (investor / government / partner)" class="card panel" rows="3" style="grid-column:1/-1"></textarea>
+              </div>
+              <div style="margin-top:10px"><button class="btn" type="submit">Submit</button> <span id="thanks" class="chip"></span></div>
+            </form>
           </div>
         </div>
-      </div>
-      <footer class="muted">Prove legitimacy in public. Earn adoption by performance.</footer>
-    </section>
+        <div class="footer">© Alpha Infinity Foundation (Australia). All components herein are subject to ongoing review, compliance updates, and jurisdictional licensing.</div>
+      </section>
 
-    <!-- 9. Call to action -->
-    <section class="slide" data-title="Call">
-      <header class="caps">Call to action</header>
-      <div class="panel">
-        <h2>Join the founding cohort</h2>
-        <div class="bullets">
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Cities & towns:</strong> Pilot municipal nodes; capture C‑Hour; host deliberations.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Partners:</strong> Identity, audit, accessibility, and translation layers.</p></div>
-          <div class="bullet"><div class="dot"></div><p><strong class="accent">Funders:</strong> Underwrite phases, publish milestones, open‑source core standards.</p></div>
-        </div>
-      </div>
-      <footer class="muted">Legitimacy is built — together — in the open.</footer>
-    </section>
-
-    <!-- 10. Contact -->
-    <section class="slide" data-title="Contact">
-      <header class="caps">Contact</header>
-      <div class="panel">
-        <h2>Make your community count</h2>
-        <p>Founding Cohort Applications: your-email@domain</p>
-        <p>Partnerships & Standards: partners@domain</p>
-        <p>Press & Briefings: press@domain</p>
-        <p class="muted" style="margin-top:10px">Replace emails with live addresses. Deploy to GitHub Pages to share.</p>
-      </div>
-      <footer class="muted">© The World Vote — Municipal representation for a planetary future.</footer>
-    </section>
-  </div>
-
-  <!-- Dots navigation -->
-  <div class="dots" id="dots"></div>
-
-  <!-- Nav buttons -->
-  <div class="nav">
-    <div class="btn" id="prev"><span>←</span><span class="k">Prev</span></div>
-    <div class="btn" id="next"><span class="k">Next</span><span>→</span></div>
-  </div>
+    </div>
+  </main>
 
   <script>
-    // Slides logic
+    // Slide navigation
     const slides = Array.from(document.querySelectorAll('.slide'));
-    const track = document.getElementById('slides');
-    const progress = document.getElementById('progress');
-    const dots = document.getElementById('dots');
-    let index = 0, lock = false;
-
-    // Build dots
-    slides.forEach((s,i)=>{
-      const d=document.createElement('div');
-      d.className='dotnav' + (i===0?' active':'');
-      d.title = s.dataset.title || ('Slide '+(i+1));
-      d.addEventListener('click',()=>go(i));
-      dots.appendChild(d);
-    });
-    const dotEls = Array.from(document.querySelectorAll('.dotnav'));
-
-    function go(i){
-      if(lock) return;
-      index = Math.max(0, Math.min(slides.length-1, i));
-      const x = -index * window.innerWidth;
-      track.style.transform = `translate3d(${x}px,0,0)`;
-      progress.style.width = ((index+1)/slides.length*100)+'%';
-      dotEls.forEach((d,di)=>d.classList.toggle('active', di===index));
-      slides.forEach((s,si)=>s.classList.toggle('active', si===index));
-      lock = true; setTimeout(()=>lock=false, 650);
+    let idx = 0;
+    const counter = document.getElementById('counter');
+    const bar = document.getElementById('progress');
+    function show(i){
+      if(i<0||i>=slides.length) return; idx=i;
+      slides.forEach((s,j)=>s.classList.toggle('active', j===idx));
+      counter.textContent = (idx+1) + ' / ' + slides.length;
+      bar.style.width = ((idx)/(slides.length-1))*100 + '%';
+      document.title = slides[idx].dataset.title + ' — Aura Ecosystem';
+      document.getElementById('yrKpi').textContent = document.getElementById('yr').value;
     }
-    function next(){go(index+1)}
-    function prev(){go(index-1)}
-
-    // Init
-    go(0);
-    document.getElementById('next').onclick=next;
-    document.getElementById('prev').onclick=prev;
-
-    // Keyboard
-    window.addEventListener('keydown', (e)=>{
-      if(['ArrowRight','PageDown','Space'].includes(e.key)) { e.preventDefault(); next() }
-      if(['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); prev() }
-      if(e.key==='Home'){go(0)}
-      if(e.key==='End'){go(slides.length-1)}
+    document.getElementById('prev').onclick = ()=> show(idx-1);
+    document.getElementById('next').onclick = ()=> show(idx+1);
+    window.addEventListener('keydown', e=>{
+      if(e.key==='ArrowRight') show(idx+1);
+      if(e.key==='ArrowLeft') show(idx-1);
     });
 
-    // Wheel / touch
-    let touchX=null;
-    window.addEventListener('wheel',(e)=>{
-      if(Math.abs(e.deltaY) < 8 && Math.abs(e.deltaX) < 8) return;
-      if(e.deltaY>0 || e.deltaX>30) next();
-      if(e.deltaY<0 || e.deltaX<-30) prev();
-    }, {passive:true});
-    window.addEventListener('touchstart', e=>{touchX = e.changedTouches[0].clientX},{passive:true});
-    window.addEventListener('touchend', e=>{
-      const dx = e.changedTouches[0].clientX - touchX;
-      if(dx < -50) next();
-      if(dx > 50) prev();
+    // Swipe for touch
+    let sx=null; let sy=null;
+    document.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
+    document.addEventListener('touchmove', e=>{
+      if(sx===null||sy===null) return; const dx = e.touches[0].clientX - sx; const dy = e.touches[0].clientY - sy;
+      if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40){ if(dx<0) show(idx+1); else show(idx-1); sx=sy=null; }
     }, {passive:true});
 
-    // Animate bullets on activation (stagger handled by CSS). Ensure first slide gets active.
-    slides[0].classList.add('active');
+    // Theme toggle
+    const themeBtn = document.getElementById('theme');
+    themeBtn.onclick = ()=>{
+      const light = document.body.classList.toggle('light');
+      themeBtn.textContent = light ? 'Light' : 'Dark';
+    };
 
-    // Resize handling to keep slide alignment
-    window.addEventListener('resize', ()=>go(index));
-
-    // Canvas particles (lightweight)
-    const c = document.getElementById('fx'), ctx = c.getContext('2d');
-    let W,H, DPR = Math.min(window.devicePixelRatio||1, 2);
-    function size(){ W= c.width = innerWidth*DPR; H= c.height = innerHeight*DPR; c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';}
-    size(); addEventListener('resize', size);
-
-    const N = 80, pts=[];
-    for(let i=0;i<N;i++){
-      pts.push({
-        x: Math.random()*W, y: Math.random()*H,
-        vx: (Math.random()-.5)*.18*DPR, vy:(Math.random()-.5)*.18*DPR
-      });
-    }
-    function step(){
-      ctx.clearRect(0,0,W,H);
-      // draw links
-      for(let i=0;i<N;i++){
-        const a=pts[i];
-        a.x+=a.vx; a.y+=a.vy;
-        if(a.x<0||a.x>W) a.vx*=-1;
-        if(a.y<0||a.y>H) a.vy*=-1;
-        for(let j=i+1;j<N;j++){
-          const b=pts[j];
-          const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-          if(d<160*DPR){
-            const alpha = (1 - d/(160*DPR)) * .25;
-            ctx.strokeStyle = `rgba(163,139,255,${alpha})`;
-            ctx.lineWidth = 1*DPR;
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-          }
-        }
+    // Activation year
+    document.getElementById('yr').addEventListener('input', e=>{
+      document.getElementById('yrKpi').textContent = e.target.value;
+      // example: tune some text hints by year
+      const note = document.getElementById('hbotNote');
+      if(note){
+        const sessions = +document.getElementById('hbotSessions').value;
+        note.textContent = `Estimated annual sessions: ${Math.round(sessions * 52 * (1 + (e.target.value-1)*0.04))}`;
       }
-      // nodes
-      for(const p of pts){
-        ctx.fillStyle='rgba(109,242,197,.35)';
-        ctx.beginPath(); ctx.arc(p.x,p.y,1.8*DPR,0,Math.PI*2); ctx.fill();
-      }
-      requestAnimationFrame(step);
-    }
-    step();
+    });
+
+    // HBOT session calc
+    document.getElementById('hbotSessions').addEventListener('input', e=>{
+      const y = +document.getElementById('yr').value;
+      document.getElementById('hbotNote').textContent = `Estimated annual sessions: ${Math.round(e.target.value * 52 * (1 + (y-1)*0.04))}`;
+    });
+
+    // Space Weather risk label
+    document.getElementById('swhRisk').addEventListener('input', e=>{
+      const map = {
+        1: 'Low (max suppression, more false negatives)',
+        2: 'Guarded (conservative alerts)',
+        3: 'Balanced (few false positives / timely warnings)',
+        4: 'Sensitive (earlier alerts, higher false positives)',
+        5: 'Aggressive (earliest alerts, many false positives)'
+      };
+      document.getElementById('swhNote').textContent = 'Current profile: ' + map[e.target.value];
+    });
+
+    // C-hours global toggle (panels are marked with .chour)
+    const chBtn = document.getElementById('chToggle');
+    let chVisible = false;
+    const setCh = (v)=>{
+      chVisible = v; chBtn.setAttribute('aria-pressed', String(v)); chBtn.textContent = v ? 'Shown' : 'Hidden';
+      document.querySelectorAll('.chour').forEach(el=> el.style.display = v ? 'block' : 'none');
+    };
+    chBtn.onclick = ()=> setCh(!chVisible);
+    setCh(false);
+
+    // Initialize
+    show(0);
   </script>
 </body>
 </html>
